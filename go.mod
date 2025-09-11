@@ -1,3 +1,4 @@
+
 module github.com/gopika032025-arch/Customer-service
 
 go 1.23.0
@@ -24,3 +25,5 @@ require (
     golang.org/x/crypto v0.41.0 // indirect
     golang.org/x/net v0.43.0 // indirect
 )
+=======
+module github.com/juhithasabbineni0320/customer-service

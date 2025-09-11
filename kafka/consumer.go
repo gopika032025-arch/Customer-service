@@ -1,3 +1,4 @@
+
 package kafka
 
 import (
@@ -27,3 +28,4 @@ func ConsumeCustomerEvents(consumerGroup sarama.ConsumerGroup, topics []string) 
 		}
 	}
 }
+
