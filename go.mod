@@ -1,8 +1,11 @@
-module customer-service
+module github.com/juhithasabbineni0320/customer-service
 
-go 1.19
+go 1.23.5
 
-require github.com/IBM/sarama v1.46.0
+require (
+	github.com/IBM/sarama v1.46.0
+	github.com/gorilla/mux v1.8.1
+)
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
