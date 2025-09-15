@@ -1,47 +1,50 @@
 package main
 
+import (
+	"github.com/gopika032025-arch/Customer-service/api"
+
+	"database/sql"
+	"fmt"
+	"log"
+	"net/http"
+
+	"github.com/IBM/sarama"
+	_ "github.com/go-sql-driver/mysql"
+)
+
 func main() {
-	// TODO: Implement DB connections first
-	// make kafak connections first using initkafka logic
-	// start the servers
-	// --- 1. Kafka producer setup ---
-	// config := sarama.NewConfig()
-	// config.Producer.Return.Successes = true
 
-	// producer, err := sarama.NewSyncProducer([]string{"localhost:9092"}, config)
-	// if err != nil {
-	// 	log.Fatalf("Failed to start Kafka producer: %v", err)
-	// }
-	// defer producer.Close()
+	dsn := ""
+	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		log.Fatal("Error opening database: ", err)
+	}
+	defer db.Close()
 
-	// --- 2. Initialize CustomerService ---
-	// custService := service.CustomerService{Producer: producer}
+	if err := db.Ping(); err != nil {
+		log.Fatal("Cannot connect to database: ", err)
+	}
+	fmt.Println(" MySQL connected")
 
-	// // --- 3. Create a customer ---
-	// customer := models.Customer{
-	// 	ID:       1,
-	// 	Email:    "test@example.com",
-	// 	Password: "password123",
-	// }
+	producer, err := initKafkaProducer()
+	if err != nil {
+		log.Fatalf("Error creating Kafka producer: %v", err)
+	}
+	defer producer.Close()
+	fmt.Println(" Kafka producer ready")
 
-	// if err := custService.CreateCustomer(customer); err != nil {
-	// 	log.Printf("Error creating customer: %v", err)
-	// }
+	api.SetupRoutes(db, producer)
 
-	// // --- 4. Deactivate customer after some time ---
-	// time.Sleep(2 * time.Second)
+	log.Println(" Server running on :8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
+}
 
-	// if err := custService.DeactivateCustomer(&customer); err != nil {
-	// 	log.Printf("Error deactivating customer: %v", err)
-	// }
+func initKafkaProducer() (sarama.SyncProducer, error) {
+	brokers := []string{"localhost:9092"}
+	config := sarama.NewConfig()
+	config.Producer.RequiredAcks = sarama.WaitForAll
+	config.Producer.Retry.Max = 5
+	config.Producer.Return.Successes = true
 
-	// // --- 5. Optional: Consume events ---
-	// // consumerGroup, err := sarama.NewConsumerGroup([]string{"localhost:9092"}, "customer-group", nil)
-	// // if err != nil {
-	// // 	log.Fatalf("Failed to create consumer group: %v", err)
-	// // }
-	// // defer consumerGroup.Close()
-	// // go kafka.ConsumeCustomerEvents(consumerGroup, []string{kafka.CustomerCreatedTopic, kafka.CustomerDeactivatedTopic})
-
-	// log.Println("Customer events sent successfully!")
+	return sarama.NewSyncProducer(brokers, config)
 }
