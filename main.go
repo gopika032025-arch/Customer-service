@@ -12,7 +12,6 @@ import (
 
 func main() {
 	dsn := ""
-
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal(err)
