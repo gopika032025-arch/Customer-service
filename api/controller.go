@@ -3,6 +3,7 @@ package api
 import (
 	"customer-service/models"
 	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -23,7 +24,8 @@ func (h Handler) UpdateEmailHandler() http.HandlerFunc {
 
 		var req models.UpdateEmailReq
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-			http.Error(w, "Invalid input", http.StatusBadRequest)
+			log.Println("decode error:", err)
+			http.Error(w, "Invalid input: "+err.Error(), http.StatusBadRequest)
 			return
 		}
 

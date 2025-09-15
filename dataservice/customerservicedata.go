@@ -7,7 +7,7 @@ import (
 
 var ErrNotFound = errors.New("customer not found")
 
-func UpdateCustomerEmail(db *sql.DB, id string, newEmail string) error {
+func UpdateCustomerEmail(db *sql.DB, id int, newEmail string) error {
 	res, err := db.Exec("UPDATE customers SET email = ?, active = TRUE WHERE id = ?", newEmail, id)
 	if err != nil {
 		return err

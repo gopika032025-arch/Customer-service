@@ -6,7 +6,7 @@ import (
 )
 
 type IBizLogic interface {
-	UpdateCustomerEmailLogic(id string, newEmail string) error
+	UpdateCustomerEmailLogic(id int, newEmail string) error
 }
 
 type BizLogic struct {
@@ -17,6 +17,6 @@ func NewBizLogic(db *sql.DB) *BizLogic {
 	return &BizLogic{DB: db}
 }
 
-func (bl *BizLogic) UpdateCustomerEmailLogic(id string, newEmail string) error {
-	return dataservice.UpdateCustomerEmail(bl.DB, id, newEmail)
+func (b *BizLogic) UpdateCustomerEmailLogic(id int, newEmail string) error {
+	return dataservice.UpdateCustomerEmail(b.DB, id, newEmail)
 }
