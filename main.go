@@ -14,7 +14,7 @@ import (
 
 func main() {
 
-	dsn := "root:Gopika@2001@tcp(127.0.0.1:3306)/customer_service?parseTime=true"
+	dsn := ""
 
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
