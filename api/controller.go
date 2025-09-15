@@ -3,11 +3,9 @@ package api
 import (
 	"encoding/json"
 	"net/http"
-)
 
-type deactivateReq struct {
-	ID string `json:"id"`
-}
+	"github.com/gopika032025-arch/Customer-service/models"
+)
 
 func (h Handler) DeactivateHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -16,7 +14,7 @@ func (h Handler) DeactivateHandler() http.HandlerFunc {
 			return
 		}
 
-		var req deactivateReq
+		var req models.Customer
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 			http.Error(w, "invalid request", http.StatusBadRequest)
 			return

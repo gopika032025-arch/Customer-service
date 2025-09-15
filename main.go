@@ -14,7 +14,8 @@ import (
 
 func main() {
 
-	dsn := ""
+	dsn := "root:Gopika@2001@tcp(127.0.0.1:3306)/customer_service?parseTime=true"
+
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal("Error opening database: ", err)
@@ -35,8 +36,8 @@ func main() {
 
 	api.SetupRoutes(db, producer)
 
-	log.Println(" Server running on :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Println(" Server running on :8081")
+	log.Fatal(http.ListenAndServe(":8081", nil))
 }
 
 func initKafkaProducer() (sarama.SyncProducer, error) {

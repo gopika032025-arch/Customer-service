@@ -7,7 +7,7 @@ import (
 
 var ErrNotFound = errors.New("customer not found")
 
-func DeactivateCustomer(db *sql.DB, id string) error {
+func DeactivateCustomer(db *sql.DB, id int) error {
 	query := "UPDATE customers SET active = FALSE WHERE id = ?"
 	res, err := db.Exec(query, id)
 	if err != nil {

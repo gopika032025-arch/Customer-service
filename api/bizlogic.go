@@ -1,15 +1,15 @@
 package api
 
 import (
-	"github.com/gopika032025-arch/Customer-service/dataservice"
-
 	"database/sql"
+	"fmt"
 
 	"github.com/IBM/sarama"
+	"github.com/gopika032025-arch/Customer-service/dataservice"
 )
 
 type IBizLogic interface {
-	DeactivateCustomerLogic(id string) error
+	DeactivateCustomerLogic(id int) error
 }
 
 type BizLogic struct {
@@ -21,15 +21,17 @@ func NewBizLogic(db *sql.DB, prod sarama.SyncProducer) *BizLogic {
 	return &BizLogic{DB: db, Producer: prod}
 }
 
-func (bl *BizLogic) DeactivateCustomerLogic(id string) error {
+func (bl *BizLogic) DeactivateCustomerLogic(id int) error {
+	// Call the dataservice to deactivate in DB
 	err := dataservice.DeactivateCustomer(bl.DB, id)
 	if err != nil {
 		return err
 	}
 
+	// Publish Kafka event
 	msg := &sarama.ProducerMessage{
 		Topic: "customer-events",
-		Value: sarama.StringEncoder("Customer deactivated: " + id),
+		Value: sarama.StringEncoder(fmt.Sprintf("Customer deactivated: %d", id)),
 	}
 	_, _, _ = bl.Producer.SendMessage(msg)
 
