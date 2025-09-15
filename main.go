@@ -12,7 +12,6 @@ import (
 
 func main() {
 	dsn := ""
-
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal(err)
@@ -32,7 +31,6 @@ func main() {
 	log.Println("Server starting on port 8082...")
 	log.Fatal(http.ListenAndServe(":8082", nil))
 }
-
 func initKafkaProducer() (sarama.SyncProducer, error) {
 	brokerList := []string{"localhost:9092"}
 
