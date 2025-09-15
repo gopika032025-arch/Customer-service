@@ -6,29 +6,16 @@ import (
 	"github.com/IBM/sarama"
 )
 
-type Producer struct {
-	SyncProducer sarama.SyncProducer
-}
-
-func NewProducer(brokers []string) (*Producer, error) {
-	config := sarama.NewConfig()
-	config.Producer.RequiredAcks = sarama.WaitForAll
-	config.Producer.Retry.Max = 5
-	config.Producer.Return.Successes = true
-
-	prod, err := sarama.NewSyncProducer(brokers, config)
-	if err != nil {
-		return nil, err
-	}
-
-	return &Producer{SyncProducer: prod}, nil
-}
-
-func (p *Producer) PublishCustomerDeactivated(id string) error {
+func ProduceKafkaMessage(topic, message string, producer sarama.SyncProducer) error {
 	msg := &sarama.ProducerMessage{
-		Topic: "customer-deactivated",
-		Value: sarama.StringEncoder(fmt.Sprintf("Customer deactivated: ID=%s", id)),
+		Topic: topic,
+		Value: sarama.StringEncoder(message),
 	}
-	_, _, err := p.SyncProducer.SendMessage(msg)
-	return err
+
+	partition, offset, err := producer.SendMessage(msg)
+	if err != nil {
+		return fmt.Errorf("error producing message to kafak: %v", err)
+	}
+	fmt.Printf("Message in stored in partition %d offset %d\n", partition, offset)
+	return nil
 }
