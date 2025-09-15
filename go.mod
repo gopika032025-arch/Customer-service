@@ -1,11 +1,10 @@
 module github.com/juhithasabbineni0320/customer-service
 
-go 1.23.5
+go 1.23.0
 
-require (
-	github.com/IBM/sarama v1.46.0
-	github.com/gorilla/mux v1.8.1
-)
+toolchain go1.23.5
+
+require github.com/IBM/sarama v1.46.0
 
 require filippo.io/edwards25519 v1.1.0 // indirect
 

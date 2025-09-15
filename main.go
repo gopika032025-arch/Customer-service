@@ -8,11 +8,10 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/IBM/sarama"
-	"github.com/juhithasabbineni0320/customer-service/api"
 )
 
 func main() {
-	dsn := "root:@tcp(127.0.0.1:3306)/mylocaldb?parseTime=true"
+	dsn := ""
 
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
@@ -29,7 +28,7 @@ func main() {
 		log.Fatalf("Error creating Kafka producer: %v", err)
 	}
 	defer producer.Close()
-	api.RegisterRoutes(db, producer)
+	// api.RegisterRoutes(db, producer)
 	log.Println("Server starting on port 8082...")
 	log.Fatal(http.ListenAndServe(":8082", nil))
 }
