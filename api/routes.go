@@ -8,7 +8,7 @@ import (
 )
 
 func RegisterRoutes(db *sql.DB, producer sarama.SyncProducer) {
-    biz := NewBizLogic(db)          
+    biz := NewBizLogic(db, producer)          
     h := &Handler{BizLogic: biz}     
     http.HandleFunc("/create", h.CreateCustomerHandler) 
 }
