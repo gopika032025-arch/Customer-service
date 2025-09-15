@@ -22,13 +22,12 @@ func NewBizLogic(db *sql.DB, prod sarama.SyncProducer) *BizLogic {
 }
 
 func (bl *BizLogic) DeactivateCustomerLogic(id int) error {
-	// Call the dataservice to deactivate in DB
+
 	err := dataservice.DeactivateCustomer(bl.DB, id)
 	if err != nil {
 		return err
 	}
 
-	// Publish Kafka event
 	msg := &sarama.ProducerMessage{
 		Topic: "customer-events",
 		Value: sarama.StringEncoder(fmt.Sprintf("Customer deactivated: %d", id)),
