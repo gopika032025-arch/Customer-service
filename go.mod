@@ -2,8 +2,6 @@ module github.com/gopika032025-arch/Customer-service
 
 go 1.23.0
 
-go 1.23.0
-
 toolchain go1.23.5
 
 require github.com/IBM/sarama v1.46.0
@@ -11,7 +9,6 @@ require github.com/IBM/sarama v1.46.0
 require filippo.io/edwards25519 v1.1.0 // indirect
 
 require (
-	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/eapache/go-resiliency v1.7.0 // indirect
 	github.com/eapache/go-xerial-snappy v0.0.0-20230731223053-c322873962e3 // indirect
