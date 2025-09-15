@@ -21,14 +21,14 @@ func NewBizLogic(db *sql.DB) *BizLogic {
 }
 
 func (bl *BizLogic) CreateCustomerLogic(customer models.CreateCustomerRequest) error {
-	if customer.CustomerID == "" {
+	if customer.CustomerID == 0 {
 		return fmt.Errorf("CustomerID is required")
 	}
 	if customer.Email == "" {
-		return fmt.Errorf("Email is required")
+		return fmt.Errorf("email is required")
 	}
 	if customer.Password == "" {
-		return fmt.Errorf("Password is required")
+		return fmt.Errorf("password is required")
 	}
 
 	if err := dataservice.CreateCustomer(bl.DB, customer); err != nil {
