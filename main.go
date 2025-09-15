@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	dsn := ""
+	dsn := "username:Abhi@123@tcp(localhost(127.0.0.1)customerdb?parseTime=true"
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal(err)

@@ -1,14 +1,10 @@
 package api
 
 import (
+	"customer-service/models"
 	"encoding/json"
 	"net/http"
 )
-
-type updateEmailReq struct {
-	ID    string `json:"id"`
-	Email string `json:"email"`
-}
 
 type Handler struct {
 	biz IBizLogic
@@ -25,7 +21,7 @@ func (h Handler) UpdateEmailHandler() http.HandlerFunc {
 			return
 		}
 
-		var req updateEmailReq
+		var req models.UpdateEmailReq
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 			http.Error(w, "Invalid input", http.StatusBadRequest)
 			return
