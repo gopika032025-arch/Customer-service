@@ -1,4 +1,4 @@
-module customer-service
+module github.com/juhithasabbineni0320/customer-service
 
 go 1.23.0
 
