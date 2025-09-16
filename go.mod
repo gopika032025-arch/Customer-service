@@ -1,4 +1,4 @@
-module customer-service
+module github.com/gopika032025-arch/Customer-service
 
 go 1.23.0
 
